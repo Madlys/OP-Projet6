@@ -24,5 +24,8 @@ mongoose.connect('mongodb+srv://clarissebouy:essiralc@cluster0.trkl226.mongodb.n
 app.use('/api/sauces', saucesRoutes);
 // Utilisateurs
 app.use('./api/auth', utilisateursRoutes);
+//Images
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 
 module.exports = app;
