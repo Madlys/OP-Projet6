@@ -1,5 +1,4 @@
-const { error } = require('console');
-const Sauces = require('./models/Sauces');
+const Sauces = require('../models/Sauces');
 const fs = require('fs');
 
 exports.createSauce = (req, res, next) => {
