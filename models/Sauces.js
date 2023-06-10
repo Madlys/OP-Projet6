@@ -16,13 +16,13 @@ const SaucesSchema = mongoose.Schema({
     // nombre entre 1 et 10 décrivant la sauce
     heat: { type: Number, required: true },
     // nombre d'utilisateurs qui aiment (= likent) la sauce
-    likes: { type: Number, required: true },
+    likes: { type: Number},
     // nombre d'utilisateurs qui n'aiment pas(= dislike) la sauce
-    dislikes: { type: Number, required: true },
+    dislikes: { type: Number},
     // tableau des identifiants des utilisateurs qui ont aimé(= liked) la sauce
-    usersLiked: { type: [userId], required: true },
+    usersLiked: { type: [userId]},
     // tableau des identifiants des utilisateurs qui n'ont pas aimé (= disliked) la sauce
-    usersDisliked: { type: [userId], required: true }
+    usersDisliked: { type: [userId]}
 });
 
 module.exports = mongoose.model("Sauces", SaucesSchema);
