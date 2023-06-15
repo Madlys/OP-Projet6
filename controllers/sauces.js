@@ -2,16 +2,16 @@ const Sauces = require('../models/Sauces');
 const fs = require('fs');
 
 exports.createSauce = (req, res, next) => {
-    // récupérer + décortiquer l'objet
+    // recover + dissect the object
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
     delete sauceObject._userId; //évite l'usurpation d'id
-    // création de l'objet
+    // creation of the object
     const sauce = new Sauces({
         ...sauceObject,
-        //extraction de l'userId de l'objet requête grâce au middleware
+        //extraction of userId from request object using middleware
         userId: req.auth.userId,
-        //génération de l'URL
+        //URL generation
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
 
@@ -46,9 +46,9 @@ exports.deleteSauce = (req, res, next) => {
             if (sauce.userId != req.auth.userId) {
                 res.status(403).json({ message: "Suppression non autorisée" });
             } else {
-                // récupération du filname dans l'URL
+                // filname retrieval in URL
                 const filename = sauce.imageUrl.split('/images/')[1];
-                // suppresion de la sauce avec unlink
+                // suppressing sauce with unlink
                 fs.unlink(`images/${filename}`, () => {
                     Sauces.deleteOne({ _id: req.params.id })
                         .then(() => { res.status(200).json({ message: "Sauce supprimée!" }) })

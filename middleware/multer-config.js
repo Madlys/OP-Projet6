@@ -1,8 +1,8 @@
-/* Middleware de gestion de fichiers grâce au package multer */
+/* File management middleware with multer package */
 
 const multer = require('multer');
 
-//bibliothèque de mymetype
+//mymetype library
 const MIME_TYPE = {
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
@@ -14,11 +14,11 @@ const storage = multer.diskStorage({
         callback(null, 'images')
     },
     filename: (req, file, callback) => {
-        //nom original du fichier en remplçant mes espaces par des underscores
+        //original file name, filling my spaces with underscores
         const name = file.originalname.split(" ").join("_");
-        //+extension grâce au mymetype
+        //+extension with mymetype
         const extension = MIME_TYPE[file.mimetype];
-        //=construction du nom du fichier: nom + timestamp (génération d'un horodatage) + extension
+        //=file name construction: name + timestamp + extension
         callback(null, name + Date.now() + "." + extension)
     }
 })

@@ -1,27 +1,27 @@
 const mongoose = require("mongoose");
 
 const SaucesSchema = mongoose.Schema({
-    //identifiant MongoDB unique de l'utilisateur qui a créé la sauce
+    //unique MongoDB identifier of the user who created the sauce
     userId: { type: String, required: true },
-    // nom de la sauce
+    //sauce name
     name: { type: String, required: true },
-    // fabricant de la sauce
+    // sauce manufacturer
     manufacturer: { type: String, required: true },
-    // description de la sauce
+    // sauce description
     description: { type: String, required: true },
-    // le principal ingrédient épicé de la sauce
+    // the sauce's main spicy ingredient
     mainPepper: { type: String, required: true },
-    // l'URL de l'image de la sauce téléchargée par l'utilisateur
+    // URL of sauce image downloaded by user
     imageUrl: { type: String, required: true },
-    // nombre entre 1 et 10 décrivant la sauce
+    // number between 1 and 10 describing the sauce
     heat: { type: Number, required: true },
-    // nombre d'utilisateurs qui aiment (= likent) la sauce
+    // number of users who like the sauce
     likes: { type: Number},
-    // nombre d'utilisateurs qui n'aiment pas(= dislike) la sauce
+    // number of users who don't like the sauce
     dislikes: { type: Number},
-    // tableau des identifiants des utilisateurs qui ont aimé(= liked) la sauce
+    // array of user IDs who liked the sauce
     usersLiked: { type: Array},
-    // tableau des identifiants des utilisateurs qui n'ont pas aimé (= disliked) la sauce
+    // array of user IDs who didn't like the sauce
     usersDisliked: { type: Array}
 });
 
