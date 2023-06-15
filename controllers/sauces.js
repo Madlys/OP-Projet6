@@ -5,7 +5,7 @@ exports.createSauce = (req, res, next) => {
     // recover + dissect the object
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
-    delete sauceObject._userId; //évite l'usurpation d'id
+    delete sauceObject._userId; //prevents id usurpation
     // creation of the object
     const sauce = new Sauces({
         ...sauceObject,
@@ -48,7 +48,7 @@ exports.deleteSauce = (req, res, next) => {
             } else {
                 // filname retrieval in URL
                 const filename = sauce.imageUrl.split('/images/')[1];
-                // suppressing sauce with unlink
+                // deleting sauce with unlink
                 fs.unlink(`images/${filename}`, () => {
                     Sauces.deleteOne({ _id: req.params.id })
                         .then(() => { res.status(200).json({ message: "Sauce supprimée!" }) })
