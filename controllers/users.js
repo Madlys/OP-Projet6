@@ -1,17 +1,24 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/Users');
+console.log('controller file loaded');
 
 exports.signup = (req, res, next) => {
+    console.log('meuh');
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
+            console.log('in hashing');
             const user = new User({
                 email: req.body.email,
                 password: hash
-            })
+            });
+
             user.save()
-                .then(() => res.status(201).json({ message: 'Utilisateur créé!' }))
-                .catch(error => res.status(400).json({ error }))
+                .then(() => {
+                    console.log('successed save');
+                    res.status(201).json({ message: 'Utilisateur créé!' })
+                })
+                .catch(error => res.status(400).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
 };
@@ -25,16 +32,17 @@ exports.login = (req, res, next) => {
                 bcrypt.compare(res.body.password, user.password)
                     .then(valid => {
                         if (!valid) {
-                            res.status(401).json({ message: 'Votre identifiant ou votre mot de passe est incorrecte' })
+                            res.status(401).json({ message: 'Votre identifiant ou votre mot de passe est incorrecte' });
+                        } else {
+                            res.status(200).json({
+                                userId: user._id,
+                                token: jwt.sign(
+                                    { userId: user._id },
+                                    'RANDOM_SECRET_TOKEN',
+                                    { expiresIn: '24h' }
+                                )
+                            });
                         }
-                        res.status(200).json({
-                            userId: user._id,
-                            token: jwt.sign(
-                                { userId: user._id },
-                                'RANDOM_SECRET_TOKEN',
-                                { expiresIn: '24h' }
-                            )
-                        });
                     })
                     .catch(error => { res.status(500).json({ error }) })
             }
