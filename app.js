@@ -25,9 +25,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use((req, res) => {
-    express.json({ message: 'Votre requête a bien été reçue !' });
-});
+app.use(express.json());
 
 // Sauces
 app.use('/api/sauces', saucesRoutes);
