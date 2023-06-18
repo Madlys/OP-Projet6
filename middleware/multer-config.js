@@ -10,10 +10,10 @@ const MIME_TYPE = {
 }
 
 const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
+    destination: (request, file, callback) => {
         callback(null, 'images')
     },
-    filename: (req, file, callback) => {
+    filename: (request, file, callback) => {
         //original file name, filling my spaces with underscores
         const name = file.originalname.split(" ").join("_");
         //+extension with mymetype

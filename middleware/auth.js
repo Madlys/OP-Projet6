@@ -1,17 +1,17 @@
 const jwt = require('jsonwebtoken');
 
-module.exports = (req, res, next) => {
+module.exports = (request, response, next) => {
     // error handling with try/catch
     try {
         // token retrieval (keyword + token)
-        const token = req.headers.authorization.split(' ')[1];
+        const token = request.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, 'RANDOM_SECRET_TOKEN');
         const userId = decodedToken.userId;
-        req.auth = {
+        request.auth = {
             userId: userId
         };
         next();
     } catch (error) {
-        res.status(401).json({ error });
+        response.status(401).json({ error });
     }
 };

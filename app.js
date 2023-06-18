@@ -15,13 +15,13 @@ mongoose.connect('mongodb+srv://clarissebouy:essiralc@cluster0.trkl226.mongodb.n
 
 const app = express();
 
-app.use((req, res, next) => {
-    //autorisation d'accès à l'API par tout le monde ('*')
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    //autorisation d'ajouter certains headers (listés après la virgule) aux requêtes envoyés
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    //autorisation d'envoyer des requêtes avec certaines méthodes (listées la virgule)
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+app.use((request, response, next) => {
+    //authorization for everyone to access the API ('*')
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    //authorization to add certain headers (listed after the comma) to sent requests
+    response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    //authorization to send requests using certain methods (listed after the comma)
+    response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
 
