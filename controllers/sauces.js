@@ -100,7 +100,6 @@ exports.deleteSauce = (request, response, next) => {
             } else {
                 // filname retrieval in URL
                 const filename = sauce.imageUrl.split('/images/')[1];
-                //ERROR: mettre la suppression de l'image en then de la suppression de la sauce
                 //deleting sauce datas with deleteOne
                 Sauces.deleteOne({ _id: request.params.id })
                     .then(() => {
