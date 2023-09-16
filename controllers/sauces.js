@@ -78,16 +78,15 @@ exports.modifySauce = (request, response, next) => {
             }
         })
         .catch((error) => {
-            console.log("YA UNE ERREUR BRROOO")
-            // if (request.file) {
-            //     fs.unlink(`images/${response.imageUrl.split('/images/')[1]}`, error => {
-            //         if (error) {
-            //             console.log(error)
-            //         } else {
-            //             console.log("Pas d'image ajoutée")
-            //         }
-            //     })
-            // }
+            if (request.file) {
+                fs.unlink(request.file.path, error => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        console.log("Pas d'image ajoutée")
+                    }
+                })
+            }
             response.status(400).json({ error })
         });
 }
