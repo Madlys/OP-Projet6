@@ -131,5 +131,76 @@ exports.getAllSauces = (request, response, next) => {
 }
 
 exports.likeSauce = (request, response, next) => {
+    /* NOTE POSTMAN: envoi de la requête en body->raw format JSON
+    avec les propriétés "userId" et "like" */
 
+    // Get object in data base
+    Sauces.findOne({ _id: request.params.id })
+        .then((object) => {
+            // switch case
+            switch (request.body.like) {
+                case 1://request like = 1 (like = +1): if a user never liked and likes
+                    if (!object.usersLiked.includes(request.body.userId) && request.body.like === 1) {
+                        // data base update
+                        Sauces.updateOne(
+                            { _id: request.params.id },
+                            {
+                                $inc: { likes: 1 },
+                                $push: { usersLiked: request.body.userId }
+                            }
+                        )
+                            .then(() => response.status(201).json({ message: "like +1" }))
+                            .catch((error) => request.status(400).json({ error }));
+                    };
+                    break;
+
+                case -1://request like = -1 (dislike = +1): if a user never disliked and dislikes
+                    if (!object.usersDisliked.includes(request.body.userId) && request.body.like === -1) {
+                        // data base update
+                        Sauces.updateOne(
+                            { _id: request.params.id },
+                            {
+                                $inc: { dislikes: 1 },
+                                $push: { usersDisliked: request.body.userId }
+                            }
+                        )
+                            .then(() => response.status(201).json({ message: "dislike +1" }))
+                            .catch((error) => request.status(400).json({ error }));
+                    };
+                    break;
+
+                case 0://request like = 0, no vote
+                    // like = 0: if a user has already liked and removes their like
+                    if (object.usersLiked.includes(request.body.userId)) {
+                        // data base update
+                        Sauces.updateOne(
+                            { _id: request.params.id },
+                            {
+                                $inc: { likes: -1 },
+                                $pull: { usersLiked: request.body.userId }
+                            }
+                        )
+                            .then(() => response.status(201).json({ message: "like -1" }))
+                            .catch((error) => request.status(400).json({ error }));
+                    }
+
+                    // dislike = 0: if a user has already disliked and removes their dislike
+                    if (object.usersDisliked.includes(request.body.userId)) {
+                        // data base update
+                        Sauces.updateOne(
+                            { _id: request.params.id },
+                            {
+                                $inc: { dislikes: -1 },
+                                $pull: { usersDisliked: request.body.userId }
+                            }
+                        )
+                            .then(() => response.status(201).json({ message: "dislike -1" }))
+                            .catch((error) => request.status(400).json({ error }));
+                    };
+            }
+        })
+        .catch((error) => request.status(404).json({ error }));
+
+
+    //request like = 0 (dislike = 0)
 }
