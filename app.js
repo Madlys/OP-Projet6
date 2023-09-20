@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const saucesRoutes = require('./routes/sauces');
 const usersRoutes = require('./routes/users');
 const path = require('path');
+require('dotenv-flow').config();
 
 //Mongoose connection
-mongoose.connect('mongodb+srv://clarissebouy:essiralc@cluster0.trkl226.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect(process.env.CONNEXION_STRING,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
