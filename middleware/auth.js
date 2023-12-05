@@ -6,7 +6,7 @@ module.exports = (request, response, next) => {
     try {
         // token retrieval (keyword + token)
         const token = request.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, process.env.jwt_TOKEN);
+        const decodedToken = jwt.verify(token, process.env.JWT_TOKEN);
         const userId = decodedToken.userId;
         request.auth = {
             userId: userId

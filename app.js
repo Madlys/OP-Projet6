@@ -6,7 +6,7 @@ const path = require('path');
 require('dotenv-flow').config();
 
 //Mongoose connection
-mongoose.connect(process.env.CONNEXION_STRING,
+mongoose.connect(process.env.CONNECTION_STRING,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
